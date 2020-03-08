@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from '../screen/HomeScreen';
+import LoginScreen from '../screen/LoginScreen';
+import MainHomeScreen from '../screen/MainHomeScreen';
 
 const Stack = createStackNavigator();
 export default class StackNav extends Component {
@@ -12,7 +13,16 @@ export default class StackNav extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name ='Home' component={HomeScreen}  options={{headerShown:false}} />
+            <Stack.Screen 
+              name ='Login' 
+              component={LoginScreen}  
+              options={{headerShown:false}} 
+            />
+            <Stack.Screen 
+              name ='Home' 
+              component={MainHomeScreen}  
+              options={{ headerShown : false}} 
+            />
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import LoginInput from '../component/LoginInput';
 
-export default class HomeScreen extends Component {
+export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ export default class HomeScreen extends Component {
             <Button
               title="Login"
               color="#3baaeb"
-              onPress={() => alert('Button with adjusted color pressed')}
+              onPress={() => this.props.navigation.navigate('Home')}
             />
             </View>
           </View>

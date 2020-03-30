@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import LoginInput from '../component/LoginInput';
 
 export default class LoginScreen extends Component {
@@ -13,7 +13,10 @@ export default class LoginScreen extends Component {
     return (
       <View style={styles.smallcontainer}>
           <View style={styles.test}>
-            <Text> Brigeet </Text>
+         
+            <View style={styles.blockImg}>
+              <Image style={styles.picture} source = {{uri:'https://i.ibb.co/r2n6Qsy/logobrigeet.png'}} />
+            </View>
             <View>
               
               <LoginInput display = 'Enter email...' capitalLetter ='none'/>
@@ -45,9 +48,18 @@ const styles = StyleSheet.create({
     },
     smallcontainer:{
       flex:1,
-      flexDirection: 'row',
+      flexDirection: 'column',
       justifyContent: 'center',
       backgroundColor:'#14e39e',
       
+    },
+    picture:{
+      width : 250,
+      height: 70,
+    },
+    blockImg:{
+      flexDirection: 'row',
+      alignItems:'center',
+      justifyContent:'center'
     }
 })

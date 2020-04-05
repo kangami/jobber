@@ -1,12 +1,109 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Picker} from 'react-native';
 import { TextInput, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-
+import {db} from '../firebase/FirebaseConnexion'
 export default class RegisterScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        first : '',
+        last: '',
+        email: '',
+        sexe:'male',
+        city: '',
+        password:'',
+        confpassword:''
     };
+  }
+
+  // group of functions using to update our states on designed input change value
+  _firstChange(text){
+      this.setState({
+          first:text
+      })
+  }
+
+  _lastChange(text){
+    this.setState({
+        last:text
+    })
+  }
+
+  _emailChange(text){
+    this.setState({
+        email:text
+    })
+  }
+
+  _citychange(text){
+    this.setState({
+        city:text
+    })
+  }
+
+  _passwordChange(text){
+    this.setState({
+        password:text
+    })
+  }
+
+  _confpasswordChange(text){
+    this.setState({
+        confpassword:text
+    })
+  }
+
+  _sexechange(text){
+      this.setState({
+          sexe: text
+      })
+  }
+
+  checkfirst(){
+    if (this.state.first == '') {
+       alert('Please fill the field') 
+    }
+  }
+
+  // function which is trigerred when a user click to create account button 
+  _createUser(){
+      //we verified first that all fill are not empty
+      if (this.state.first == '' || this.state.last == '' || this.state.email =='' || this.state.city == '' || this.state.password == '' || this.state.confpassword == '') {
+          alert('Please filled all fields before proceed')
+      } else {
+          // checking if password nd confirm password are equal 
+          if (this.state.password != this.state.confpassword) {
+              alert("confirm password don't Match ")
+          } else {
+              // get the date 
+            let d = new Date()
+            // generate unique ID
+            let id = Math.round(d.getTime() + ((Math.random()*9999999)+1))
+
+            //getting the current date 
+            let dateSave = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear()
+            
+              // saving data to firebase
+              db.ref('Users').push(
+                  {
+                    id : id,
+                    dateCreation : dateSave,
+                    firstName: this.state.first,
+                    lastName: this.state.last,
+                    email: this.state.email,
+                    sexe: this.state.sexe,
+                    city:this.state.city,
+                    password: this.state.password
+                  }
+                  
+              ).then(()=>{
+                alert('add success')
+                this.props.navigation.navigate('Home')
+              }).catch((error) => alert(error))
+          }
+      }
+
+    
   }
 
   render() {
@@ -33,22 +130,21 @@ export default class RegisterScreen extends Component {
                 </Text>
             </View>
             <View style={styles.cnt2}>
-                <TextInput style={styles.input1} placeholder="first name"/>
+                <TextInput style={styles.input1} placeholder="first name" onChangeText={ text => this._firstChange(text)} />
             </View>
 
             <View style={styles.cnt2}>
-                <TextInput style={styles.input1} placeholder="last name"/>
+                <TextInput style={styles.input1} placeholder="last name" onChangeText={ text => this._lastChange(text)}/>
             </View>
 
             <View style={styles.cnt2}>
-                <TextInput style={styles.input1} placeholder="Email"/>
+                <TextInput style={styles.input1} placeholder="Email" autoCapitalize="none" onChangeText={ text => this._emailChange(text)}/>
             </View>
             <View style={styles.cnt4}>
                 <Picker
                     mode = 'dialog'
-                    
-
-                    
+                    selectedValue={this.state.sexe}
+                    onValueChange={(itemValue, itemPosition)=>this._sexechange(itemValue)}
                     style={styles.picker1}
                     
                 >
@@ -59,17 +155,17 @@ export default class RegisterScreen extends Component {
             </View>
 
             <View style={styles.cnt2}>
-                <TextInput style={styles.input1} placeholder="City"/>
+                <TextInput style={styles.input1} placeholder="City" onChangeText={ text => this._citychange(text)}/>
             </View>
             <View style={styles.cnt2}>
-                <TextInput style={styles.input1} placeholder="password"  secureTextEntry={true}/>
+                <TextInput style={styles.input1} placeholder="password"  secureTextEntry={true} onChangeText={ text => this._passwordChange(text)}/>
             </View>
             <View style={styles.cnt2}>
-                <TextInput style={styles.input1} placeholder="Confirm password"  secureTextEntry={true}/>
+                <TextInput style={styles.input1} placeholder="Confirm password"  secureTextEntry={true} onChangeText={ text => this._confpasswordChange(text)}/>
             </View>
 
             <View style={styles.cnt2}>
-                <TouchableOpacity style={styles.buttonregister}>
+                <TouchableOpacity style={styles.buttonregister}  onPress={()=>this._createUser()} >
                     <Text style={styles.txt4}> Create </Text>
                 </TouchableOpacity>
             </View>

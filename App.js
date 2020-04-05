@@ -28,7 +28,7 @@ import StackNav from './src/navigation/StackNav';
 const App: () => React$Node = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content"  backgroundColor="#111582" />
       
         <StackNav />
     

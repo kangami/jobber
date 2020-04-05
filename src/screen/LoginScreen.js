@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ImageBackground } from 'react-native';
 import LoginInput from '../component/LoginInput';
 
 export default class LoginScreen extends Component {
@@ -11,11 +11,11 @@ export default class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={styles.smallcontainer}>
+      <ImageBackground source={require('../pictures/font1.png')} style={styles.smallcontainer}>
           <View style={styles.test}>
          
             <View style={styles.blockImg}>
-              <Image style={styles.picture} source = {{uri:'https://i.ibb.co/r2n6Qsy/logobrigeet.png'}} />
+              <Image style={styles.picture} source = {require('../pictures/letjob.png')} />
             </View>
             <View>
               
@@ -30,7 +30,7 @@ export default class LoginScreen extends Component {
             />
             </View>
           </View>
-      </View>
+      </ImageBackground>
       
     );
   }
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         paddingLeft:17,
         paddingRight:17,
-        marginTop: 150
+        marginTop: 100
        
     },
     smallcontainer:{
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     picture:{
       width : 250,
-      height: 70,
+      height: 150,
     },
     blockImg:{
       flexDirection: 'row',

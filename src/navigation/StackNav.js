@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from '../screen/LoginScreen';
 import MainHomeScreen from '../screen/MainHomeScreen';
+import RegisterScreen from '../screen/RegisterScreen';
 
 const Stack = createStackNavigator();
 export default class StackNav extends Component {
@@ -22,6 +23,11 @@ export default class StackNav extends Component {
               name ='Home' 
               component={MainHomeScreen}  
               options={{ headerShown : false}} 
+            />
+            <Stack.Screen 
+              name ='Subscription' 
+              component={RegisterScreen}  
+              
             />
         </Stack.Navigator>
       </NavigationContainer>

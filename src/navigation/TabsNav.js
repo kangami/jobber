@@ -25,7 +25,7 @@ export default class TabsNav extends Component {
           
           <Tab.Screen name ='Ma Job' component={MessageScreen} 
             options={{
-              tabBarLabel: 'Ma Job',
+              tabBarLabel: 'My Jobbing',
               tabBarIcon: ({color}) => {
                 <MaterialCommunityIcons name="bell" color="white"  size={26} />
               }

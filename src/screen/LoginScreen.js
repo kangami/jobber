@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import LoginInput from '../component/LoginInput';
 
 export default class LoginScreen extends Component {
@@ -23,11 +23,30 @@ export default class LoginScreen extends Component {
               <LoginInput display = 'Enter password...' entry ={true}/>
             </View>
             <View>
-            <Button
-              title="Login"
-              color="#3baaeb"
-              onPress={() => this.props.navigation.navigate('Home')}
-            />
+
+            
+            <View style={styles.loginbutton}>
+              
+              <TouchableOpacity
+                style={styles.buttonlogin}
+                onPress={() => this.props.navigation.navigate('Home')}
+              >
+                <Text style={styles.labelbutton}> Login</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              
+
+              <TouchableOpacity
+                style={styles.buttonregister}
+                onPress={() => this.props.navigation.navigate('Subscription')}
+              >
+                <Text style={styles.labelbutton}> Subscription</Text>
+              </TouchableOpacity>
+            </View>
+            
+            
+            
             </View>
           </View>
       </ImageBackground>
@@ -41,8 +60,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         alignContent: 'center',
-        paddingLeft:17,
-        paddingRight:17,
+        paddingLeft:25,
+        paddingRight:25,
         marginTop: 100
        
     },
@@ -61,5 +80,30 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems:'center',
       justifyContent:'center'
+    },
+    loginbutton:{
+      marginBottom:20
+    },
+    
+    buttonlogin: {
+      alignItems: 'center',
+      backgroundColor: '#d111c1',
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor:'black'
+    },
+    buttonregister: {
+      alignItems: 'center',
+      backgroundColor: '#111582',
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor:'black'
+    },
+    labelbutton:{
+      color: "white",
+      fontSize: 17,
+      fontWeight:'bold'
     }
 })

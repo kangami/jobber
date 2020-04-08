@@ -6,7 +6,7 @@ import MainScreen from '../screen/homesubscreen/MainScreen';
 import ProfilScreen from '../screen/homesubscreen/ProfilScreen';
 import AdScreen from '../screen/homesubscreen/AdScreen';
 import MessageScreen from '../screen/homesubscreen/MessageScreen';
-import { MaterialCommunityIcons } from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
 const Tab = createMaterialBottomTabNavigator();
 
 export default class TabsNav extends Component {
@@ -17,23 +17,30 @@ export default class TabsNav extends Component {
       
         
 
-        <Tab.Navigator options={{ showIcon:true,}} initialRouteName='Annonce' backBehavior ='initialRoute'  barStyle= {{ backgroundColor:"#111582" }} activeColor="#f5bf0f" inactiveColor="#f5f0e1">
+        <Tab.Navigator options={{ showIcon:true,}}  showIcon ={true} shifting={false} initialRouteName='Home' backBehavior ='initialRoute'  barStyle= {{ backgroundColor:"#111582" }} activeColor="#f5bf0f" inactiveColor="#f5f0e1">
           <Tab.Screen name ='Home' component={MainScreen} 
             options={{}}
           />
-          <Tab.Screen name ='Annonce' component={AdScreen} />
+          <Tab.Screen name ='Ads' component={AdScreen} />
           
           <Tab.Screen name ='Ma Job' component={MessageScreen} 
             options={{
-              tabBarLabel: 'My Jobbing',
-              tabBarIcon: ({color}) => {
-                <MaterialCommunityIcons name="bell" color="white"  size={26} />
-              }
-                
-              
+              tabBarLabel: 'Jobbing',
+   
             }}
           />
          
+         <Tab.Screen
+          name="Profil"
+          component={ProfilScreen}
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color }) => {(
+              <MaterialCommunityIcons name="account" color={color} size={26} />
+            )},
+            
+          }}
+        />
         </Tab.Navigator>
       
     );

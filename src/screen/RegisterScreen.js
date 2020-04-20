@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Picker} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Picker, Alert} from 'react-native';
 import { TextInput, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import {db} from '../firebase/FirebaseConnexion'
 export default class RegisterScreen extends Component {
@@ -69,11 +69,11 @@ export default class RegisterScreen extends Component {
   _createUser(){
       //we verified first that all fill are not empty
       if (this.state.first == '' || this.state.last == '' || this.state.email =='' || this.state.city == '' || this.state.password == '' || this.state.confpassword == '') {
-          alert('Please filled all fields before proceed')
+          Alert.alert('Please filled all fields before proceed')
       } else {
           // checking if password nd confirm password are equal 
           if (this.state.password != this.state.confpassword) {
-              alert("confirm password don't Match ")
+              Alert.alert("confirm password don't Match ")
           } else {
               // get the date 
             let d = new Date()
@@ -97,7 +97,7 @@ export default class RegisterScreen extends Component {
                   }
                   
               ).then(()=>{
-                alert('add success')
+                Alert.alert('add success')
                 this.props.navigation.navigate('Home')
               }).catch((error) => alert(error))
           }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, Image, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ImageBackground, TouchableOpacity, TextInput,Alert } from 'react-native';
 import LoginInput from '../component/LoginInput';
 import {db} from '../firebase/FirebaseConnexion'
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -26,10 +27,26 @@ export default class LoginScreen extends Component {
     })
   }
   
+  // saving authorized user's data on local storage of the App 
+  async _storeValidUser(valeur){
+    try {
+      await AsyncStorage.setItem('userId', valeur.id+'')
+      await AsyncStorage.setItem('userEmail', valeur.email)
+      await AsyncStorage.setItem('userFirstName', valeur.firstName)
+      await AsyncStorage.setItem('userLastName', valeur.lastName)
+      await AsyncStorage.setItem('userPassWord', valeur.password)
+      await AsyncStorage.setItem('userSexe', valeur.sexe)
+      await AsyncStorage.setItem('userDateCreation', valeur.dateCreation)
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
+
   //function which is trigerred when login click button
   _loginClick(){
     if (this.state.loginEmail == '' || this.state.loginPassword =='') {
-      alert('Make sure to fill login fields')
+      Alert.alert('Make sure to fill login fields')
     } else {
 
       db.ref('Users').on('value', (data)=>{
@@ -38,7 +55,9 @@ export default class LoginScreen extends Component {
             this.isUserEmail = true
             if ( this.state.loginPassword == doc.toJSON().password) {
               this.isUserPass = true
-              
+              // user credentials accepted so we saved current user on storage 
+              this._storeValidUser(doc.toJSON())
+
             }else{
               this.isUserPass = false
               
@@ -54,11 +73,11 @@ export default class LoginScreen extends Component {
         }
 
         if (this.isUserEmail && !this.isUserPass) {
-          alert('your password is incorrect')
+          Alert.alert('your password is incorrect')
         }
 
         if (!this.isUserEmail) {
-          alert('Email incorrect, Create Your Account')
+          Alert.alert('Email incorrect, Create Your Account')
         }
       })
       
@@ -179,7 +198,8 @@ const styles = StyleSheet.create({
       borderBottomWidth:4,
       borderBottomLeftRadius: 5,
       borderBottomRightRadius: 5,
-      fontSize: 16
+      fontSize: 16,
+      color: "white"
     },
     vue:{
       marginBottom: 40

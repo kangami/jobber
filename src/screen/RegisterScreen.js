@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Picker, Alert} from 'react-native';
 import { TextInput, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import {db} from '../firebase/FirebaseConnexion'
+
 export default class RegisterScreen extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +16,22 @@ export default class RegisterScreen extends Component {
         password:'',
         confpassword:''
     };
+
+    this.emailLists=[]
+    this.isuser = '';
   }
 
+  componentDidMount(){
+      this.emailLists = []
+    db.firestore().collection("Users").onSnapshot( Snapshot => {
+               
+        Snapshot.docs.forEach(doc => {
+            this.emailLists.push(doc.data().email)  
+            
+        })
+    })
+
+  }
   // group of functions using to update our states on designed input change value
   _firstChange(text){
       this.setState({
@@ -30,6 +46,7 @@ export default class RegisterScreen extends Component {
   }
 
   _emailChange(text){
+      
     this.setState({
         email:text
     })
@@ -65,42 +82,73 @@ export default class RegisterScreen extends Component {
     }
   }
 
+  // function that return a boolean base if a user is on datatbase or not
+_checkUserExistOnDatabase(email, tab){
+    let controller
+    for(i = 0; i<tab.length; i++){
+        if(email == tab[i]){
+            controller = true
+            return controller
+        }else{
+            controller = false
+        }
+    }
+    return controller   
+}
+
   // function which is trigerred when a user click to create account button 
-  _createUser(){
+_createUser(){
+   
+    
       //we verified first that all fill are not empty
-      if (this.state.first == '' || this.state.last == '' || this.state.email =='' || this.state.city == '' || this.state.password == '' || this.state.confpassword == '') {
+     if (this.state.first == '' || this.state.last == '' || this.state.email =='' || this.state.city == '' || this.state.password == '' || this.state.confpassword == '') {
           Alert.alert('Please filled all fields before proceed')
       } else {
           // checking if password nd confirm password are equal 
           if (this.state.password != this.state.confpassword) {
               Alert.alert("confirm password don't Match ")
           } else {
-              // get the date 
-            let d = new Date()
-            // generate unique ID
-            let id = Math.round(d.getTime() + ((Math.random()*9999999)+1))
+             
+                if(this._checkUserExistOnDatabase(this.state.email, this.emailLists)){
+                    Alert.alert('User already exist')
+                }else{
+                    let d = new Date()
+                    
 
-            //getting the current date 
-            let dateSave = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear()
+                    //getting the current date 
+                    let dateSave = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear()
+                    
+                    // saving data to firebase
+                    db.firestore().collection("Users").add({
+                        dateCreation : dateSave,
+                        firstName: this.state.first,
+                        lastName: this.state.last,
+                        email: this.state.email,
+                        sexe: this.state.sexe,
+                        city:this.state.city,
+                        password: this.state.password
+                    })
+                    .then(()=>{
+                        Alert.alert('Your Account Was Create')
+                        this.props.navigation.navigate('Home')
+                        
+                    })
+                    .catch((error)=>{
+                        console.error("Error adding document: ", error);
+                    });
+                }
+                
             
-              // saving data to firebase
-              db.ref('Users').push(
-                  {
-                    id : id,
-                    dateCreation : dateSave,
-                    firstName: this.state.first,
-                    lastName: this.state.last,
-                    email: this.state.email,
-                    sexe: this.state.sexe,
-                    city:this.state.city,
-                    password: this.state.password
-                  }
-                  
-              ).then(()=>{
-                Alert.alert('add success')
-                this.props.navigation.navigate('Home')
-              }).catch((error) => alert(error))
-          }
+            
+           
+            
+        
+                // get the date 
+                
+            }
+            
+            
+          
       }
 
     

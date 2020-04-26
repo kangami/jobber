@@ -47,25 +47,28 @@ export default class AdressePrice extends Component {
         //getting the current date 
         let dateSave = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear()
 
-        db.ref('AdsJobing').push(
-            {
-              id : id,
-              dateAds : dateSave,
-              userId: this.state.userId,
-              adressJob: this.state.adresse,
-              paymentMode: this.state.switchVal ? 'Cash' : 'Bank' ,
-              price: this.state.sliderVal,
-              dateJobing: this.props.route.params.date,
-              description: this.props.route.params.description,
-              category:this.props.route.params.category,
-              startTime: this.props.route.params.starttime
-
-            }
-            
-        ).then(()=>{
+        //save data on datatbase
+        db.firestore().collection("AdsJobing").add({
+            dateAds : dateSave,
+            userId: this.state.userId,
+            adressJob: this.state.adresse,
+            paymentMode: this.state.switchVal ? 'Cash' : 'Bank' ,
+            price: this.state.sliderVal,
+            dateJobing: this.props.route.params.date,
+            description: this.props.route.params.description,
+            category:this.props.route.params.category,
+            startTime: this.props.route.params.starttime,
+            image: this.props.route.params.image+''
+        })
+        .then(()=>{
             Alert.alert('add success')
             this.props.navigation.navigate('Ma Job')
-        }).catch((error) => alert(error))
+            
+        })
+        .catch((error)=>{
+            console.error("Error adding document: ", error);
+        });
+
       } catch (error) {
           console.log(error)
       }

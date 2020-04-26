@@ -13,6 +13,18 @@ export default class LoginScreen extends Component {
     };
     this.isUserEmail = false
     this.isUserPass = false
+
+    this.emailLists = []
+    this.idLists = []
+  }
+
+  componentDidMount(){
+    db.firestore().collection("Users").onSnapshot( Snapshot => {        
+        Snapshot.docs.forEach(doc => {
+          this.emailLists.push(doc.data()) 
+          this.idLists.push(doc.id)
+        })
+    })
   }
 
   // on login fields change text
@@ -28,9 +40,9 @@ export default class LoginScreen extends Component {
   }
   
   // saving authorized user's data on local storage of the App 
-  async _storeValidUser(valeur){
+  async _storeValidUser(valeur, id){
     try {
-      await AsyncStorage.setItem('userId', valeur.id+'')
+      await AsyncStorage.setItem('userId', id+'')
       await AsyncStorage.setItem('userEmail', valeur.email)
       await AsyncStorage.setItem('userFirstName', valeur.firstName)
       await AsyncStorage.setItem('userLastName', valeur.lastName)
@@ -42,32 +54,57 @@ export default class LoginScreen extends Component {
       console.log(error)
     }
   }
+  /*_show(){
+    db.database().ref('Users').on('value', (data)=>{
+      data.forEach((doc)=>{
+        if(this.state.loginEmail == doc.toJSON().email){
+          this.isUserEmail = true
+          if ( this.state.loginPassword == doc.toJSON().password) {
+            this.isUserPass = true
+            // user credentials accepted so we saved current user on storage 
+            //this._storeValidUser(doc.toJSON())
+
+          }else{
+            this.isUserPass = false
+            
+          }
+
+        }else{
+          this.isUserEmail = false
+        }
+        
+      })
+      
+    })
+  }*/
+
+  _isEmail(email, password, tab1){
+    for (let index = 0; index < tab1.length; index++) {
+      if(email == tab1[index].email){
+        this.isUserEmail = true
+        if(password == tab1[index].password){
+          this.isUserPass = true
+          this._storeValidUser(tab1[index], this.idLists[index])
+          return 'user'
+        }else{
+          this.isUserPass = false
+          return 'passFailed'
+        }
+
+      }else{
+        this.isUserEmail = false
+      }
+      
+    }
+  }
 
   //function which is trigerred when login click button
   _loginClick(){
     if (this.state.loginEmail == '' || this.state.loginPassword =='') {
       Alert.alert('Make sure to fill login fields')
     } else {
-
-      db.ref('Users').on('value', (data)=>{
-        data.forEach((doc)=>{
-          if(this.state.loginEmail == doc.toJSON().email){
-            this.isUserEmail = true
-            if ( this.state.loginPassword == doc.toJSON().password) {
-              this.isUserPass = true
-              // user credentials accepted so we saved current user on storage 
-              this._storeValidUser(doc.toJSON())
-
-            }else{
-              this.isUserPass = false
-              
-            }
-
-          }else{
-            this.isUserEmail = false
-          }
-        })
-
+        this._isEmail(this.state.loginEmail, this.state.loginPassword, this.emailLists)
+        
         if (this.isUserEmail && this.isUserPass) {
           this.props.navigation.navigate('Home')
         }
@@ -79,7 +116,8 @@ export default class LoginScreen extends Component {
         if (!this.isUserEmail) {
           Alert.alert('Email incorrect, Create Your Account')
         }
-      })
+      
+      
       
     }
     

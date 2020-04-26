@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-
+import { View, Text, StyleSheet } from 'react-native';
+import Bartitle from '../../component/Bartitle'
 export default class ProfilScreen extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +10,16 @@ export default class ProfilScreen extends Component {
 
   render() {
     return (
-      <View>
-        <Text> ProfilScreen </Text>
+      <View style={styles.container}>
+        <Bartitle title="Profil"/>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+    flexDirection: "column"
+  }
+})

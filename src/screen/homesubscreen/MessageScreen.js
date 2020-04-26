@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Bartitle from '../../component/Bartitle'
 
 export default class MessageScreen extends Component {
   constructor(props) {
@@ -10,9 +11,15 @@ export default class MessageScreen extends Component {
 
   render() {
     return (
-      <View>
-        <Text> MessageScreen </Text>
+      <View style={styles.container}>
+        <Bartitle title="Jobing"/>
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+    flexDirection: "column"
+  }
+})

@@ -11,7 +11,7 @@ export default class ProfilScreen extends Component {
   render() {
     return (
       <ImageBackground source={require('../../pictures/fond.png')} style={styles.container}>
-        <Bartitle title="PROFILE"/>
+        <Bartitle title="Profile"/>
       </ImageBackground>
     );
   }

@@ -68,6 +68,9 @@ export default class FlatElement extends Component {
       if(category == 'default'){
         return require('../pictures/fond.png')
       }
+      if(category == 'snow'){
+        return require('../pictures/snow-removal.png')
+      }
   }
  
  

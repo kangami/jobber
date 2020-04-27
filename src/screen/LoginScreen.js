@@ -137,7 +137,7 @@ export default class LoginScreen extends Component {
                     style = {styles.input}
                     placeholder = 'Email...'
                     placeholderTextColor = '#e9f5f0'
-                    autoCapitalize = {false}
+                    autoCapitalize="none"
                     onChangeText={(text)=>this._emailChange(text)}
                 />
               </View>
@@ -148,6 +148,7 @@ export default class LoginScreen extends Component {
                     placeholderTextColor = '#e9f5f0'
                     secureTextEntry = {true}
                     onChangeText = {(text)=>this._passwordChange(text)}
+                    autoCapitalize="none"
                 />
               </View>
             </View>
@@ -184,8 +185,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         alignContent: 'center',
-        paddingLeft:25,
-        paddingRight:25,
+        paddingLeft:32,
+        paddingRight:32,
         marginTop: 100
        
     },
@@ -197,8 +198,8 @@ const styles = StyleSheet.create({
       
     },
     picture:{
-      width : 250,
-      height: 150,
+      width : 200,
+      height: 100,
     },
     blockImg:{
       flexDirection: 'row',

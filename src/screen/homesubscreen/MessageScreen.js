@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import Bartitle from '../../component/Bartitle'
 
 export default class MessageScreen extends Component {
@@ -11,9 +11,9 @@ export default class MessageScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ImageBackground source={require('../../pictures/fond.png')} style={styles.container}>
         <Bartitle title="Jobing"/>
-      </View>
+      </ImageBackground>
     );
   }
 }

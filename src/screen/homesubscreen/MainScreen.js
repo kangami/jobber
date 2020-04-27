@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Picker, FlatList, Modal, Button} from 'react-native';
+import { View, Text, StyleSheet, Picker, FlatList, Modal, Button, ImageBackground} from 'react-native';
 import Bartitle from '../../component/Bartitle'
 import {db} from "../../firebase/FirebaseConnexion"
 import FlatElement from "../../component/FlatElement"
@@ -26,7 +26,7 @@ export default class MainScreen extends Component {
     let store = []
     db.firestore().collection('AdsJobing').onSnapshot(Snapshot =>{
       Snapshot.docs.forEach((doc) =>{
-        store = [doc.id, doc.data()]
+        store = {id:doc.id, data:doc.data()}
         this.content.push(store)
 
         
@@ -36,19 +36,16 @@ export default class MainScreen extends Component {
 
 // function which fetching jobbing base on category selection 
   _fetchBaseOnCategory(val){
-    let store = []
+    let store = {}
     this.content = []
     try {
-      
-      
-
       if (val == "default") {
         this._fetchAllJobing()
       } else {
 
-        db.firestore().collection('AdsJobing').where("category", "==", val).get().then(Snapshot =>{
+        db.firestore().collection('AdsJobing').where("category", "==", val).onSnapshot(Snapshot =>{
           Snapshot.docs.forEach((doc) =>{
-            store = [doc.id, doc.data()]
+            store = {id:doc.id, data:doc.data()}
             this.content.push(store)
           })
         })
@@ -87,7 +84,7 @@ export default class MainScreen extends Component {
   }
     render() {
     return (
-      <View style={styles.container}>
+      <ImageBackground source={require('../../pictures/fond.png')} style={styles.container}>
         <Bartitle title = 'Search'/>
         <View style={styles.filters}>
           <Picker
@@ -109,8 +106,8 @@ export default class MainScreen extends Component {
           <FlatList
                 data = {this.content}
                 
-                keyExtractor = {(item) => item[0].toString()}
-                renderItem = {({item}) => {return <FlatElement flatval={item[1]} onswipLeft={this._onswipeableLeftAction} onswipRight={this._onswipeableRightAction}/>}}
+                keyExtractor = {(item) => item.id.toString()}
+                renderItem = {({item}) => {return <FlatElement flatval={item.data} onswipLeft={this._onswipeableLeftAction} onswipRight={this._onswipeableRightAction}/>}}
             />
 
         </View>
@@ -129,7 +126,7 @@ export default class MainScreen extends Component {
             </View>
           </View>
         </Modal>
-      </View>
+      </ImageBackground>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import Bartitle from '../../component/Bartitle'
 export default class ProfilScreen extends Component {
   constructor(props) {
@@ -10,9 +10,9 @@ export default class ProfilScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Bartitle title="Profil"/>
-      </View>
+      <ImageBackground source={require('../../pictures/fond.png')} style={styles.container}>
+        <Bartitle title="PROFILE"/>
+      </ImageBackground>
     );
   }
 }

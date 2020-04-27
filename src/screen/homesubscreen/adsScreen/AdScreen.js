@@ -41,6 +41,9 @@ export default class AdScreen extends Component {
     if(item == 'pet'){
       this.background = require('../../../pictures/pet.png')
     }
+    if(item == 'snow'){
+      this.background = require('../../../pictures/snow-removal.png')
+    }
     if(item == 'default'){
       this.background = require('../../../pictures/fond.png')
     }
@@ -71,6 +74,7 @@ export default class AdScreen extends Component {
             <Picker.Item label='Baby Sitting' value='baby' />
             <Picker.Item label='Menage / Aide a la personne' value='help'/>
             <Picker.Item label='Beauty' value = "beauty"/>
+            <Picker.Item label='Snow Removal' value = "snow"/>
             <Picker.Item label='Demenagement' value='move'/>
             <Picker.Item label='Cours/ Soutient Scolaire' value='support'/>
             <Picker.Item label='Event / Hotesse' value = 'event'/>

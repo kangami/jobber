@@ -20,23 +20,23 @@ export default class TabsNav extends Component {
         
 
         <Tab.Navigator options={{ showIcon:true,}}  showIcon ={true} shifting={false} initialRouteName='Home' backBehavior ='initialRoute'  barStyle= {{ backgroundColor:"#111582" }} activeColor="#d111c1" inactiveColor="#f5f0e1">
-          <Tab.Screen name ='Home' component={AdsNav} 
+          <Tab.Screen name ='HOME' component={AdsNav} 
             options={{
               tabBarIcon: () => (
                 <Image
                 source={require('../pictures/hometab.png')}
-                style={{width: 22, height: 22, tintColor: "white"}}
+                style={{width: 17, height: 17, tintColor: "white"}}
               />
               ),
             }}
           />
-          <Tab.Screen name ='Ads' component={MainScreen} 
+          <Tab.Screen name ='ADS' component={MainScreen} 
             options={{
               
               tabBarIcon: () => (
                 <Image
                 source={require('../pictures/adstab.png')}
-                style={{width: 22, height: 20, tintColor: "white"}}
+                style={{width: 19, height: 16, tintColor: "white"}}
               />
               ),
             }}
@@ -45,11 +45,11 @@ export default class TabsNav extends Component {
           <Tab.Screen name ='Ma Job' component={MessageScreen} 
             showIcon ={true}
             options={{
-              tabBarLabel: 'Jobbing',
+              tabBarLabel: 'JOBING',
               tabBarIcon: () => (
                 <Image
                 source={require('../pictures/jobbingtab.png')}
-                style={{width: 23, height: 26, tintColor: "white"}}
+                style={{width: 18, height: 20, tintColor: "white"}}
               />
               ),
             }}
@@ -58,14 +58,14 @@ export default class TabsNav extends Component {
 
          
          <Tab.Screen
-          name="Profil"
+          name="PROFILE"
           component={ProfilScreen}
           options={{
-            tabBarLabel: 'Profil',
+            
             tabBarIcon: () => (
               <Image
               source={require('../pictures/profiltab.png')}
-              style={{width: 19, height: 23, tintColor: "white"}}
+              style={{width: 15, height: 18, tintColor: "white"}}
             />
             ),
             

@@ -5,13 +5,13 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 const LeftAction =(progress, dragX)=>{
   const scale = dragX.interpolate({
       inputRange: [0, 70],
-      outputRange:[0, 1],
+      outputRange:[0, 70],
       extrapolate:'clamp'
   })
   return(
       <View style={{ flex:1, flexDirection:"row",backgroundColor:"#d111c1"}}>
         <View style={{ alignSelf: "center", padding:10}}>
-        <Animated.Text style={{color: "white", fontSeize:25, fontWeight:"bold", textAlign: "center"}}> Take Up Jobing</Animated.Text>
+        <Animated.Text style={[{color: "white", fontSeize:25, fontWeight:"bold", textAlign: "center"}, {transform: [{translateX:scale}]}]}> Take Up Jobing</Animated.Text>
         </View>
           
       </View>

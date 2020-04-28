@@ -92,7 +92,7 @@ export default class FlatElement extends Component {
                 </ImageBackground>
                 <View style={styles.body}>
                 <View style={styles.description}>
-                        <Text style={styles.descriptionTitle}>{this.props.flatval.description}</Text>
+                        <Text numberOfLines={1} style={styles.descriptionTitle}>{this.props.flatval.description}</Text>
                 </View>
                 <View style={styles.date}>
                         <Text style={styles.dateTitle}>{this.props.flatval.dateJobing}</Text>
@@ -158,11 +158,11 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     description:{
-        flex:0.8,
+        flex:0.7,
         flexDirection: "column"
     },
     date:{
-        flex:0.2,
+        flex:0.3,
         flexDirection: "column"
     },
     title:{

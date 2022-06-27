@@ -38,6 +38,8 @@ export default class FlatElement extends Component {
     this.state = {
         
     };
+
+    this.refsArray = []
   }
 
   _checkImage(category){
@@ -73,40 +75,50 @@ export default class FlatElement extends Component {
       }
   }
  
+  closeRow(val){
+    
+      this.refsArray[0].close()
+    
+    
+  }
  
   render() {
       const onSwip = this.props.onswipRight
+      const flatval = this.props.flatval.data
     return (
       
       <Swipeable
+        
         renderLeftActions = {LeftAction}
         renderRightActions = {rightAction}
         onSwipeableLeftOpen={this.props.onswipLeft}
-        onSwipeableRightOpen={()=>onSwip(this.props.flatval.category)}
+        onSwipeableRightOpen={()=>onSwip(flatval)}
         
+        leftThreshold={80}
+        RightThreshold={80}
       >
         
             <View style={styles.containeur}>
-                <ImageBackground source={this._checkImage(this.props.flatval.category)} style={styles.header} >
-                    <Text style={styles.title}> {this.props.flatval.category}</Text>
+                <ImageBackground source={this._checkImage(flatval.category)} style={styles.header} >
+                    <Text style={styles.title}> {flatval.category}</Text>
                 </ImageBackground>
                 <View style={styles.body}>
                 <View style={styles.description}>
-                        <Text numberOfLines={1} style={styles.descriptionTitle}>{this.props.flatval.description}</Text>
+                        <Text numberOfLines={1} style={styles.descriptionTitle}>{flatval.description}</Text>
                 </View>
                 <View style={styles.date}>
-                        <Text style={styles.dateTitle}>{this.props.flatval.dateJobing}</Text>
+                        <Text style={styles.dateTitle}>{flatval.dateJobing}</Text>
                 </View>
                 </View>
                 <View style={styles.footer}>
                     <View style={styles.footerElement}>
-                        <Text style={styles.footerTitle}>{this.props.flatval.startTime}</Text>
+                        <Text style={styles.footerTitle}>{flatval.startTime}</Text>
                     </View>
                     <View style={styles.footerElement}>
-                        <Text style={styles.footerTitle}>{this.props.flatval.price}$/Hr</Text>
+                        <Text style={styles.footerTitle}>{flatval.price}$/Hr</Text>
                     </View>
                     <View style={styles.footerElement}>
-                        <Text style={styles.footerTitle}>{this.props.flatval.paymentMode}</Text>
+                        <Text style={styles.footerTitle}>{flatval.paymentMode}</Text>
                     </View>
                 </View>
             </View>
